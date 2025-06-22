@@ -30,3 +30,20 @@ go.work.sum
 # Editor/IDE
 # .idea/
 # .vscode/
+
+# 隐私配置
+*.env.*
+*.toml
+
+# React 前端常用忽略项
+view/node_modules/
+view/build/
+view/dist/
+view/yarn.lock
+package-lock.json
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 其他常见忽略项
+*.log
