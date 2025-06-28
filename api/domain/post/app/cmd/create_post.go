@@ -2,15 +2,15 @@ package cmd
 
 import (
 	"context"
+	"github.com/SimonMorphy/grog/api/domain/post/app/dto"
+	"github.com/SimonMorphy/grog/api/domain/post/repo"
 	"github.com/SimonMorphy/grog/api/infra/pkg/decorator"
-	"github.com/SimonMorphy/grog/api/post/app/dto"
-	"github.com/SimonMorphy/grog/api/post/repo"
 	"github.com/sirupsen/logrus"
 	"gorm.io/gorm"
 )
 
 type CreatePost struct {
-	Post dto.PostDTO
+	Post dto.Post
 }
 
 type CreatePostResult struct {

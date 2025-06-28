@@ -1,9 +1,9 @@
 package main
 
 import (
+	"github.com/SimonMorphy/grog/api/domain/post"
+	"github.com/SimonMorphy/grog/api/domain/post/app"
 	_ "github.com/SimonMorphy/grog/api/infra/config"
-	"github.com/SimonMorphy/grog/api/post"
-	"github.com/SimonMorphy/grog/api/post/app"
 	"github.com/SimonMorphy/grog/api/types"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"

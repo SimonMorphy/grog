@@ -33,17 +33,7 @@ func (pg PostgreSQL) DSN() string {
 func NewPostgres() *gorm.DB {
 	once.Do(func() {
 		PG = new(PostgreSQL)
-		err := viper.BindEnv("postgresql.username", "GROG_PG_USER")
-		if err != nil {
-			logrus.Error("failed to bind environment variables: ", err)
-			return
-		}
-		err = viper.BindEnv("postgresql.password", "GROG_PG_PASSWORD")
-		if err != nil {
-			logrus.Error("failed to bind environment variables: ", err)
-			return
-		}
-		err = viper.UnmarshalKey("postgresql", PG)
+		err := viper.UnmarshalKey("postgresql", PG)
 		if err != nil {
 			logrus.Panic("unable to unmarshal postgres config: ", err)
 		}

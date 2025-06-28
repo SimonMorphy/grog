@@ -1,9 +1,9 @@
 package entity
 
 import (
+	"github.com/SimonMorphy/grog/api/domain/post/vo"
 	"time"
 
-	"github.com/SimonMorphy/grog/api/post/vo"
 	"gorm.io/gorm"
 )
 

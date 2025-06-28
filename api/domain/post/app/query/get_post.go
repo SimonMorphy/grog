@@ -2,9 +2,9 @@ package query
 
 import (
 	"context"
+	"github.com/SimonMorphy/grog/api/domain/post/entity"
+	"github.com/SimonMorphy/grog/api/domain/post/repo"
 	"github.com/SimonMorphy/grog/api/infra/pkg/decorator"
-	"github.com/SimonMorphy/grog/api/post/entity"
-	"github.com/SimonMorphy/grog/api/post/repo"
 	"github.com/sirupsen/logrus"
 	"gorm.io/gorm"
 )

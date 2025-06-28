@@ -1,9 +1,9 @@
 package post
 
 import (
-	"github.com/SimonMorphy/grog/api/post/app"
-	"github.com/SimonMorphy/grog/api/post/app/cmd"
-	"github.com/SimonMorphy/grog/api/post/app/dto"
+	"github.com/SimonMorphy/grog/api/domain/post/app"
+	"github.com/SimonMorphy/grog/api/domain/post/app/cmd"
+	"github.com/SimonMorphy/grog/api/domain/post/app/dto"
 	"github.com/SimonMorphy/grog/api/types"
 	"github.com/gin-gonic/gin"
 )
@@ -14,7 +14,7 @@ type HttpServer struct {
 }
 
 func (h HttpServer) CreatePost(ctx *gin.Context) {
-	var post dto.PostDTO
+	var post dto.Post
 	if err := ctx.ShouldBindJSON(&post); err != nil {
 		h.Resp.Error(ctx, err)
 	}
@@ -36,5 +36,4 @@ func (h HttpServer) Apply(e *gin.Engine) {
 		postGroup.POST("/", h.CreatePost)
 		postGroup.GET("/:id", h.GetPost)
 	}
-
 }

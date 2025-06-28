@@ -9,6 +9,7 @@ func NewViper() {
 	viper.SetConfigName("application")
 	viper.SetConfigType("yml")
 	viper.AddConfigPath("./")
+	viper.AutomaticEnv()
 	err := viper.ReadInConfig()
 	if err != nil {
 		logrus.Error(err)
