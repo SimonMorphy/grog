@@ -2,7 +2,6 @@ package adapters
 
 import (
 	"context"
-	"github.com/SimonMorphy/grog/api/domain/post/app/dto"
 	"github.com/SimonMorphy/grog/api/domain/post/entity"
 	"gorm.io/gorm"
 )
@@ -11,19 +10,18 @@ type RepositoryPost struct {
 	DB *gorm.DB
 }
 
-func (r RepositoryPost) List(ctx context.Context) ([]*entity.Post, error) {
-	//TODO implement me
-	panic("implement me")
+func (r RepositoryPost) List(ctx context.Context) (posts []*entity.Post, err error) {
+	err = r.DB.Model(POST).WithContext(ctx).Find(&posts).Error
+	return
 }
 
-func (r RepositoryPost) Update(ctx context.Context, post *dto.Post) (*entity.Post, error) {
-	//TODO implement me
-	panic("implement me")
+func (r RepositoryPost) Update(ctx context.Context, post *entity.Post) (p *entity.Post, err error) {
+	err = r.DB.Model(POST).WithContext(ctx).Save(post).Error
+	return
 }
 
 func (r RepositoryPost) Delete(ctx context.Context, u uint) error {
-	//TODO implement me
-	panic("implement me")
+	return r.DB.Model(POST).WithContext(ctx).Delete(u).Error
 }
 
 func NewRepositoryPostgres(DB *gorm.DB) *RepositoryPost {

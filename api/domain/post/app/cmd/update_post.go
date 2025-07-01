@@ -16,13 +16,20 @@ type UpdatePostResult struct {
 	Post entity.Post
 }
 
-type UpdatePostHandler decorator.Handler[UpdatePost, *UpdatePostResult]
+type UpdatePostHandler decorator.CommandHandler[UpdatePost, *UpdatePostResult]
 
 type updatePostHandler struct {
 	Repo repo.PostRepository
 }
 
-func (u updatePostHandler) Handle(ctx context.Context, query UpdatePost) (*UpdatePostResult, error) {
-	//TODO implement me
-	panic("implement me")
+func (u updatePostHandler) Handle(ctx context.Context, command UpdatePost) (*UpdatePostResult, error) {
+	p := command.Post
+	if err := p.Validate(); err != nil {
+		return nil, err
+	}
+	res, err := u.Repo.Update(ctx, p.ToEntity())
+	if err != nil {
+		return nil, err
+	}
+	return &UpdatePostResult{Post: *res}, nil
 }

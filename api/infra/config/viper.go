@@ -14,5 +14,5 @@ func NewViper() {
 	if err != nil {
 		logrus.Error(err)
 	}
-	logrus.Info("logrus config loaded successfully")
+	logrus.Info("logger config loaded successfully")
 }

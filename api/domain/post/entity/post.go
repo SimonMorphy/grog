@@ -1,7 +1,9 @@
 package entity
 
 import (
+	"fmt"
 	"github.com/SimonMorphy/grog/api/domain/post/vo"
+	"golang.org/x/crypto/bcrypt"
 	"time"
 
 	"gorm.io/gorm"
@@ -26,6 +28,34 @@ type Post struct {
 	Tags            []*Tag         `json:"tags" gorm:"many2many:post_tags;"`
 }
 
-func (p Post) TableName() string {
+func (p *Post) TableName() string {
 	return "post"
+}
+
+func (p *Post) EncryptPassword() error {
+	hashedBytes, err := bcrypt.GenerateFromPassword([]byte(p.Password), bcrypt.DefaultCost)
+	p.Password = string(hashedBytes)
+	return err
+}
+
+func (p *Post) CheckPassword(password string) error {
+	return bcrypt.CompareHashAndPassword([]byte(p.Password), []byte(password))
+}
+
+func (p *Post) TransitionTo(newStatus vo.PostStatus) error {
+	currentStatus := p.Status
+
+	if allowed, exists := vo.StatusTransitions[currentStatus][newStatus]; !exists || !allowed {
+		return fmt.Errorf("invalid cast :-> %s → %s", currentStatus, newStatus)
+	}
+
+	switch {
+	case currentStatus == vo.Scheduled && newStatus == vo.Published:
+		*p.PublishTime = time.Now()
+	case newStatus == vo.Deleted:
+		p.Model.DeletedAt = gorm.DeletedAt{Time: time.Now()}
+	}
+
+	p.Status = newStatus
+	return nil
 }

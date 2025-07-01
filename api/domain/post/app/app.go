@@ -35,9 +35,15 @@ func NewApp() App {
 }
 
 type Cmd struct {
-	CreatePost cmd.CreatePostHandler
+	CreatePost     cmd.CreatePostHandler
+	CreateCategory cmd.CreateCategoryHandler
+	DeleteCategory cmd.DeleteCategoryHandler
+	DeletePost     cmd.DeletePostHandler
+	UpdatePost     cmd.UpdatePostHandler
 }
 
 type Qry struct {
-	GetPost query.GetPostHandler
+	GetPost     query.GetPostHandler
+	ListPost    query.ListPostHandler
+	GetCategory query.GetCategoryHandler
 }

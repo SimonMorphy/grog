@@ -19,7 +19,7 @@ func main() {
 		App:  App,
 	}
 	server.Apply(engine)
-	err := engine.Run(":8080")
+	err := engine.Run(":5579")
 	if err != nil {
 		logrus.Panicf(
 			"Failed to start server: %v", err)
