@@ -33,7 +33,7 @@ func (r RepositoryTag) Update(ctx context.Context, e *entity.Tag) (*entity.Tag, 
 }
 
 func (r RepositoryTag) Delete(ctx context.Context, u uint) error {
-	return r.DB.WithContext(ctx).Model(TAG).Delete(u).Error
+	return r.DB.WithContext(ctx).Delete(TAG, u).Error
 }
 
 func (r RepositoryTag) BatchSave(ctx context.Context, tags []*entity.Tag) error {
