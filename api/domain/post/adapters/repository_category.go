@@ -10,6 +10,10 @@ type RepositoryCategory struct {
 	DB *gorm.DB
 }
 
+func NewRepositoryCategory(DB *gorm.DB) *RepositoryCategory {
+	return &RepositoryCategory{DB: DB}
+}
+
 func (r RepositoryCategory) BatchSave(ctx context.Context, categories []*entity.Category) error {
 	return r.DB.Transaction(func(tx *gorm.DB) error {
 		return r.DB.WithContext(ctx).Create(categories).Error
@@ -28,8 +32,12 @@ func (r RepositoryCategory) Get(ctx context.Context, u uint) (c *entity.Category
 	return
 }
 
-func (r RepositoryCategory) List(ctx context.Context) (categories []*entity.Category, err error) {
-	err = r.DB.Model(CATEGORY).WithContext(ctx).Find(&categories).Error
+func (r RepositoryCategory) List(ctx context.Context, page, size int) (categories []*entity.Category, err error) {
+	err = r.DB.Model(CATEGORY).WithContext(ctx).
+		Offset(page).
+		Limit(size).
+		Find(&categories).
+		Error
 	return
 }
 

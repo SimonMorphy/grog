@@ -1,4 +1,4 @@
-package vo
+package entity
 
 type PostStatus int
 

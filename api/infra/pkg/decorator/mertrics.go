@@ -3,6 +3,7 @@ package decorator
 import (
 	"context"
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"strings"
 	"time"
 )
@@ -34,8 +35,10 @@ type ToDoMetrics struct {
 }
 
 func (t ToDoMetrics) Inc(key string, val int) {
-	//TODO implement me
-	panic("implement me")
+	logrus.WithFields(logrus.Fields{
+		"key": key,
+		"val": val,
+	}).Infof("metrics incs -> %s => %d", key, val)
 }
 
 func NewToDoMetrics() MetricsRecord {

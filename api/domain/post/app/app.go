@@ -21,15 +21,20 @@ func NewApp() App {
 	if err != nil {
 		logrus.Fatalf("failed to migrate database: %v", err)
 	}
-	Repo := adapters.NewRepositoryPostgres(DB)
+	postRepo := adapters.NewRepositoryPost(DB)
+	cateRepo := adapters.NewRepositoryCategory(DB)
 	logger := logrus.NewEntry(logrus.StandardLogger())
 	todoMetrics := decorator.NewToDoMetrics()
 	return App{
 		C: Cmd{
-			CreatePost: cmd.NewCreatePostHandler(Repo, logger, todoMetrics),
+			CreatePost:     cmd.NewCreatePostHandler(postRepo, logger, todoMetrics),
+			CreateCategory: cmd.NewCreateCategoryHandler(cateRepo, logger, todoMetrics),
+			DeletePost:     cmd.NewDeletePostHandler(postRepo, logger, todoMetrics),
+			UpdatePost:     cmd.NewUpdatePostHandler(postRepo, logger, todoMetrics),
 		},
 		Q: Qry{
-			GetPost: query.NewGetPostHandler(Repo, logger, todoMetrics),
+			GetPost:  query.NewGetPostHandler(postRepo, logger, todoMetrics),
+			ListPost: query.NewListPostHandler(postRepo, logger, todoMetrics),
 		},
 	}
 }

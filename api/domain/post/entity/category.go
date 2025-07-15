@@ -6,8 +6,8 @@ import (
 
 type Category struct {
 	gorm.Model
-	Name  string  `gorm:"size:50;not null"`
-	Posts []*Post `gorm:"many2many:post_categories;"`
+	Name  string  `json:"name" gorm:"size:50;not null;unique"`
+	Posts []*Post `json:"posts" gorm:"many2many:post_categories;"`
 }
 
 func (c Category) TableName() string {

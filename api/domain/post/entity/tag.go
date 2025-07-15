@@ -4,7 +4,7 @@ import "gorm.io/gorm"
 
 type Tag struct {
 	gorm.Model
-	Name  string  `gorm:"size:50;not null"`
+	Name  string  `gorm:"size:50;not null;unique"`
 	Posts []*Post `gorm:"many2many:post_tags;"`
 }
 

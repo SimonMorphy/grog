@@ -10,8 +10,8 @@ type RepositoryPost struct {
 	DB *gorm.DB
 }
 
-func (r RepositoryPost) List(ctx context.Context) (posts []*entity.Post, err error) {
-	err = r.DB.Model(POST).WithContext(ctx).Find(&posts).Error
+func (r RepositoryPost) List(ctx context.Context, page, size int) (posts []*entity.Post, err error) {
+	err = r.DB.Model(POST).WithContext(ctx).Offset(page).Limit(size).Find(&posts).Error
 	return
 }
 
@@ -24,7 +24,7 @@ func (r RepositoryPost) Delete(ctx context.Context, u uint) error {
 	return r.DB.Model(POST).WithContext(ctx).Delete(u).Error
 }
 
-func NewRepositoryPostgres(DB *gorm.DB) *RepositoryPost {
+func NewRepositoryPost(DB *gorm.DB) *RepositoryPost {
 	return &RepositoryPost{DB: DB}
 }
 

@@ -6,6 +6,7 @@ import (
 	"github.com/SimonMorphy/grog/api/domain/post/repo"
 	"github.com/SimonMorphy/grog/api/infra/pkg/decorator"
 	"github.com/sirupsen/logrus"
+	"gorm.io/gorm"
 )
 
 type CreateCategory struct {
@@ -32,4 +33,19 @@ func (c createCategoryHandler) Handle(ctx context.Context, query CreateCategory)
 	return &CreateCategoryResult{
 		Category: res,
 	}, nil
+}
+
+func NewCreateCategoryHandler(
+	repo repo.CategoryRepository,
+	entry *logrus.Entry,
+	record decorator.MetricsRecord,
+) CreateCategoryHandler {
+	if repo == nil {
+		logrus.Panic(gorm.ErrInvalidDB)
+	}
+	return decorator.ApplyHandlerDecorators[CreateCategory, *CreateCategoryResult](
+		&createCategoryHandler{Repo: repo},
+		entry,
+		record,
+	)
 }

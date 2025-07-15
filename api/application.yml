@@ -5,3 +5,6 @@ postgresql:
     username: simon
     password: simon5579!
 
+gorm:
+    defaultPageSize: 10
+

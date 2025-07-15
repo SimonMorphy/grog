@@ -6,6 +6,7 @@ import (
 	"github.com/SimonMorphy/grog/api/domain/post/entity"
 	"github.com/SimonMorphy/grog/api/domain/post/repo"
 	"github.com/SimonMorphy/grog/api/infra/pkg/decorator"
+	"github.com/sirupsen/logrus"
 )
 
 type UpdatePost struct {
@@ -32,4 +33,19 @@ func (u updatePostHandler) Handle(ctx context.Context, command UpdatePost) (*Upd
 		return nil, err
 	}
 	return &UpdatePostResult{Post: *res}, nil
+}
+
+func NewUpdatePostHandler(
+	repo repo.PostRepository,
+	entry *logrus.Entry,
+	record decorator.MetricsRecord,
+) UpdatePostHandler {
+	if repo == nil {
+		entry.Panicf("post repo is nil")
+	}
+	return decorator.ApplyHandlerDecorators[UpdatePost, *UpdatePostResult](
+		&updatePostHandler{Repo: repo},
+		entry,
+		record,
+	)
 }
